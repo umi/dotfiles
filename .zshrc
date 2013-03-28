@@ -19,7 +19,7 @@ case ${UID} in
   RPROMPT="%{${fg[blue]}%}[%/]%{${reset_color}%}"
   ;;
 *)
-  PROMPT="[%{${fg[cyan]}%}%n@%m%{${reset_color}%}%{${fg[blue]}%}%/%{${reset_color}%}] %{${fg[cyan]}%}#%{${reset_color}%} "
+  PROMPT="[%{${fg[cyan]}%}%n@%m%{${reset_color}%}] %{${fg[cyan]}%}#%{${reset_color}%} "
   PROMPT2="%B%{${fg[blue]}%}%_#%{${reset_color}%}%b "
   SPROMPT="%B%{${fg[blue]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
   RPROMPT="%{${fg[yellow]}%}[%/]%{${reset_color}%}"
@@ -174,3 +174,7 @@ function psm
     psa | sort -r -n --key=4 | grep -v "ps auxw" | grep -v grep | head -n 8
 }
 
+if [[ -f ~/.nodebrew/nodebrew ]]; then
+    export PATH=$HOME/.nodebrew/current/bin:$PATH
+    nodebrew use v0.10.1
+fi
