@@ -11,8 +11,7 @@ compinit
 autoload colors
 colors
 
-case ${UID} in
-0)
+case ${UID} in 0)
   PROMPT="[%{${fg[blue]}%}%n@%m%{${reset_color}%}] %{${fg[blue]}%}#%{${reset_color}%} "
   PROMPT2="%B%{${fg[blue]}%}%_#%{${reset_color}%}%b "
   SPROMPT="%B%{${fg[blue]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
@@ -175,6 +174,8 @@ function psm
 }
 
 if [[ -f ~/.nodebrew/nodebrew ]]; then
-    export PATH=$HOME/.nodebrew/current/bin:$PATH
-    nodebrew use v0.10.1
+	export PATH=$HOME/.nodebrew/current/bin:$PATH
+	nodebrew use v0.10.1
 fi
+
+fpath=(~/.zsh/completion $fpath)
