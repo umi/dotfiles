@@ -11,17 +11,26 @@ compinit
 autoload colors
 colors
 
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' formats '[%b]'
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+precmd () {
+	psvar=()
+	LANG=en_US.UTF-8 vcs_info
+	[[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
+
 case ${UID} in 0)
   PROMPT="[%{${fg[blue]}%}%n@%m%{${reset_color}%}] %{${fg[blue]}%}#%{${reset_color}%} "
   PROMPT2="%B%{${fg[blue]}%}%_#%{${reset_color}%}%b "
   SPROMPT="%B%{${fg[blue]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
-  RPROMPT="%{${fg[blue]}%}[%~]%{${reset_color}%}"
+  RPROMPT="%{${fg[blue]}%}[%~]%{${reset_color}%}%1(v|%F{green}%1v%f|)"
   ;;
 *)
   PROMPT="[%{${fg[cyan]}%}%n@%m%{${reset_color}%}] %{${fg[cyan]}%}#%{${reset_color}%} "
   PROMPT2="%B%{${fg[blue]}%}%_#%{${reset_color}%}%b "
   SPROMPT="%B%{${fg[blue]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
-  RPROMPT="%{${fg[yellow]}%}[%~]%{${reset_color}%}"
+  RPROMPT="%{${fg[yellow]}%}[%~]%{${reset_color}%}%1(v|%F{green}%1v%f|)"
   ;;
 esac
 
@@ -118,6 +127,7 @@ alias du="du -h"
 alias df="df -h"
 alias psa="ps auxw"
 alias tmux='tmux -2'
+alias ssh='TERM=xterm ssh'
 
 ## 最後のスラッシュを自動的に削除しない
 setopt noautoremoveslash
@@ -175,7 +185,7 @@ function psm
 
 if [[ -f ~/.nodebrew/nodebrew ]]; then
 	export PATH=$HOME/.nodebrew/current/bin:$PATH
-	nodebrew use v0.10.1
+	nodebrew use v0.10.3
 fi
 
 fpath=(~/.zsh/completion $fpath)
