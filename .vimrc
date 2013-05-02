@@ -64,6 +64,8 @@ NeoBundle 'L9'
 " smooth_scroll.vim : スクロールを賢く
 NeoBundle 'Smooth-Scroll'
 NeoBundle 'SudoEdit.vim'
+" Qfix howm メモツール
+NeoBundle 'fuenor/qfixhowm'
 
 filetype plugin on
 filetype indent on
@@ -477,3 +479,16 @@ endfunc
 " NERDTree
 "----------------------
 nmap <F9> :NERDTreeToggle<CR>
+
+"クリップボードの同期
+"set clipboard+=autoselect
+"set clipboard+=unnamed
+if has("clipboard") 
+  vmap ,y "+y 
+  nmap ,p "+gP 
+  " exclude:{pattern} must be last ^= prepend += append 
+  if has("gui_running") || has("xterm_clipboard") 
+    silent! set clipboard^=unnamedplus 
+    set clipboard^=unnamed 
+  endif 
+endif 
