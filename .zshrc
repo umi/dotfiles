@@ -183,9 +183,15 @@ function psm
     psa | sort -r -n --key=4 | grep -v "ps auxw" | grep -v grep | head -n 8
 }
 
+# nodebrew
 if [[ -f ~/.nodebrew/nodebrew ]]; then
 	export PATH=$HOME/.nodebrew/current/bin:$PATH
 	nodebrew use v0.10.3
+fi
+
+# dircolors solarized
+if [ -x /usr/bin/dircolors ]; then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 
 fpath=(~/.zsh/completion $fpath)
