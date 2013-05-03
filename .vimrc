@@ -65,7 +65,9 @@ NeoBundle 'L9'
 NeoBundle 'Smooth-Scroll'
 NeoBundle 'SudoEdit.vim'
 " Qfix howm メモツール
-NeoBundle 'fuenor/qfixhowm'
+NeoBundle 'glidenote/memolist.vim'
+" HyblidText
+NeoBundle 'HybridText'
 
 filetype plugin on
 filetype indent on
@@ -232,6 +234,15 @@ nmap <silent> <Leader>p :Project ~/.vimprojects<CR>
 " サブプロジェクトを上に、vimgrepではなくgrepを使うように設定
 let g:proj_flags = 'imstTv'
 
+" memolist.vim設定
+map ,mn  :MemoNew<CR>
+map ,mc  :MemoNew<CR>
+map ,ml  :MemoList<CR>
+map ,mg  :MemoGrep<CR>
+
+" HyblidText設定
+autocmd BufEnter * if &filetype == "" | setlocal ft=hybrid | endif
+
 " エラーマーカーの設定
 let g:errormarker_errortext = '!!'
 let g:errormarker_warningtext = '??'
@@ -299,18 +310,18 @@ let php_parent_error_open = 1
 " onoremap k gk
 " xnoremap k gk
  
-" Ctrl + n or pでタブ移動
-nnoremap <C-n> gt
-nnoremap <C-p> gT
+" Ctrl + h or lでタブ移動
+nnoremap <C-h> gt
+nnoremap <C-l> gT
 " ノーマルモードではセミコロンをコロンに
 nnoremap ; :
 " insert mode での移動
 imap <C-e> <END>
 imap <C-a> <HOME>
-imap <C-j> <Down>
-imap <C-k> <Up>
-imap <C-h> <Left>
-imap <C-l> <Right>
+" imap <C-j> <Down>
+" imap <C-k> <Up>
+" imap <C-h> <Left>
+" imap <C-l> <Right>
 " 左右のカーソル移動で行間移動可能にする。
 set whichwrap=b,s,<,>,[,],h,l
 " 新しい行のインデントを現在行と同じにする
