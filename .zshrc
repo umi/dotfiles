@@ -183,9 +183,9 @@ function psm
 # z
 _Z_CMD=j
 source ~/git/github/z/z.sh
-precmd() {
-  _z --add "$(pwd -P)"
-}
+# precmd() {
+  # _z --add "$(pwd -P)"
+# }
 compctl -U -K _z_zsh_tab_completion "$_Z_CMD"
 
 # nodebrew
