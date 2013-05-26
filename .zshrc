@@ -101,7 +101,7 @@ setopt share_history
 zstyle ':completion:*:default' menu select=1
 
 ## 補完候補の色づけ
-eval `dircolors`
+eval $(dircolors -b ~/.dircolors)
 export ZLS_COLORS=$LS_COLORS
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
@@ -119,12 +119,9 @@ setopt correct
 
 ## エイリアス
 setopt complete_aliases
-alias ls="ls --color"
-alias la="ls -a"
-alias lf="ls -F"
-alias ll="ls -l"
-alias du="du -h"
-alias df="df -h"
+alias ls="ls -F --color"
+alias la="ls -F -al --color"
+alias ll="ls -F -l --color"
 alias psa="ps auxw"
 alias tmux='tmux -2'
 alias ssh='TERM=xterm ssh'
@@ -183,15 +180,24 @@ function psm
     psa | sort -r -n --key=4 | grep -v "ps auxw" | grep -v grep | head -n 8
 }
 
+# z
+_Z_CMD=j
+source ~/git/github/z/z.sh
+precmd() {
+  _z --add "$(pwd -P)"
+}
+compctl -U -K _z_zsh_tab_completion "$_Z_CMD"
+
 # nodebrew
 if [[ -f ~/.nodebrew/nodebrew ]]; then
 	export PATH=$HOME/.nodebrew/current/bin:$PATH
 	nodebrew use v0.10.3
 fi
 
-# dircolors solarized
+# dircolors
 if [ -x /usr/bin/dircolors ]; then
-	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 
 fpath=(~/.zsh/completion $fpath)
+
