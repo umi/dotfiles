@@ -191,7 +191,7 @@ compctl -U -K _z_zsh_tab_completion "$_Z_CMD"
 # nodebrew
 if [[ -f ~/.nodebrew/nodebrew ]]; then
 	export PATH=$HOME/.nodebrew/current/bin:$PATH
-	nodebrew use v0.10.3
+	nodebrew use v0.11.2
 fi
 
 # dircolors
