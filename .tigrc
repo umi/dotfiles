@@ -1,2 +1,4 @@
-bind status U !git pull
-bind status P !git push
+bind generic G none
+bind generic U !git pull --rebase
+bind generic P !git push
+bind generic O !git commit -m 'test'

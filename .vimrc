@@ -17,6 +17,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/unite-ssh'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'szw/vim-tags'
 " Uniteコマンドでアウトラインを表示
 NeoBundle 'h1mesuke/unite-outline'
 " :JSHintコマンドによるJS文法チェック
@@ -36,7 +37,9 @@ NeoBundle 'Align'
 " 選択後 :SQLUFormatter でSQL整形
 NeoBundle 'vim-scripts/SQLUtilities'
 " PHP5.4にも対応している新しいPHPのシンタックスハイライト
-NeoBundle 'shawncplus/php.vim'
+" NeoBundle 'shawncplus/php.vim'
+" smarty シンタックスハイライト
+NeoBundle 'sifue/smarty.vim'
 " :CodeSniffでPHP_CodeSnifferを実行するプラグイン
 " NeoBundle 'bpearson/vim-phpcs'
 " JavaScriptのシンタクスハイライト
@@ -56,9 +59,13 @@ NeoBundle 'DirDiff.vim'
 " :make時のエラーマーカーを表示
 " NeoBundle 'errormarker.vim'
 " ステータスラインに顔文字を表示
-NeoBundle 'mattn/hahhah-vim'
-" ステータスラインをカッコよくする
-NeoBundle 'Lokaltog/vim-powerline'
+" NeoBundle 'mattn/hahhah-vim'
+" ステータスラインを見やすく
+" NeoBundle 'Lokaltog/vim-powerline'
+" NeoBundle 'alpaca-tc/alpaca_powertabline'
+" NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
+" NeoBundle 'Lokaltog/powerline-fontpatcher'
+NeoBundle 'itchyny/lightline.vim'
 " utillity
 NeoBundle 'L9'
 " smooth_scroll.vim : スクロールを賢く
@@ -68,6 +75,10 @@ NeoBundle 'SudoEdit.vim'
 NeoBundle 'glidenote/memolist.vim'
 " HyblidText
 NeoBundle 'HybridText'
+" セッション
+NeoBundle 'xolox/vim-session', {
+            \ 'depends' : 'xolox/vim-misc',
+          \ }
 
 filetype plugin on
 filetype indent on
@@ -184,7 +195,7 @@ let g:neocomplcache_dictionary_filetype_lists = {
 " タグファイルの場所
 augroup SetTagsFile
   autocmd!
-  autocmd FileType php set tags=$HOME/.vim/tags/php.tags
+  autocmd FileType php set tags=.git/tags
 augroup END
 " タグ補完の呼び出しパターン
 if !exists('g:neocomplcache_member_prefix_patterns')
@@ -311,8 +322,8 @@ let php_parent_error_open = 1
 " xnoremap k gk
  
 " Ctrl + h or lでタブ移動
-nnoremap <C-h> gt
-nnoremap <C-l> gT
+nnoremap <C-h> gT
+nnoremap <C-l> gt
 " ノーマルモードではセミコロンをコロンに
 nnoremap ; :
 " insert mode での移動
@@ -387,6 +398,9 @@ endif
 " \ 'php' : '-R --languages=PHP --langmap=PHP:.php.inc --php-types=c+f+d'
 " \ }
 
+" tagジャンプ
+nnoremap <F8> :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
+
 "--------------------
 " php syntax
 "--------------------
@@ -438,13 +452,84 @@ set ruler
 
 " vim-powerlineでフォントにパッチを当てないなら以下をコメントアウト
 let g:Powerline_symbols = 'fancy'
+let g:lightline = {
+			\ 'mode_map': {'c': 'NORMAL'},
+			\ 'active': {
+			\   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+			\ },
+			\ 'component_function': {
+			\   'modified': 'MyModified',
+			\   'readonly': 'MyReadonly',
+			\   'fugitive': 'MyFugitive',
+			\   'filename': 'MyFilename',
+			\   'fileformat': 'MyFileformat',
+			\   'filetype': 'MyFiletype',
+			\   'fileencoding': 'MyFileencoding',
+			\   'mode': 'MyMode'
+			\ }
+			\ }
+
+function! MyModified()
+	return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+	return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+endfunction
+
+function! MyFilename()
+	return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+				\ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+				\  &ft == 'unite' ? unite#get_status_string() :
+				\  &ft == 'vimshell' ? vimshell#get_status_string() :
+				\ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+				\ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+	try
+		if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+			return fugitive#head()
+		endif
+	catch
+	endtry
+	return ''
+endfunction
+
+function! MyFileformat()
+	return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+	return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+	return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+	return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+" let g:lightline = {
+	" \ 'colorscheme': 'solarized'
+	" \ }
+
+" let g:lightline = {
+      " \ 'colorscheme': 'wombat',
+      " \ 'component': {
+      " \   'readonly': '%{&readonly?"&#11108;":""}',
+      " \ },
+      " \ 'separator': { 'left': '&#11136;', 'right': '&#11138;' },
+      " \ 'subseparator': { 'left': '&#11137;', 'right': '&#11139;' }
+      " \ }
 
 " ステータスラインに文字コードと改行文字を表示する
-if winwidth(0) >= 120
-	set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %F%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
-else
-	set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %f%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
-endif
+" if winwidth(0) >= 120
+	" set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %F%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
+" else
+	" set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %f%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
+" endif
 
 " 入力モード時、ステータスラインのカラーを変更
 augroup InsertHook
@@ -503,3 +588,28 @@ if has("clipboard")
     set clipboard^=unnamed 
   endif 
 endif 
+
+" ctrl+cでクリップボードに
+vmap <C-c> :w !xsel -ib<CR><CR>
+
+"----------------------
+" vim-session
+"----------------------
+" 現在のディレクトリ直下の .vimsessions/ を取得 
+let s:local_session_directory = xolox#misc#path#merge(getcwd(), '.vimsessions')
+" 存在すれば
+if isdirectory(s:local_session_directory)
+  " session保存ディレクトリをそのディレクトリの設定
+  let g:session_directory = s:local_session_directory
+  " vimを辞める時に自動保存
+  let g:session_autosave = 'yes'
+  " 引数なしでvimを起動した時にsession保存ディレクトリのdefault.vimを開く
+  let g:session_autoload = 'yes'
+  " 1分間に1回自動保存
+  let g:session_autosave_periodic = 1
+else
+  let g:session_autosave = 'no'
+  let g:session_autoload = 'no'
+endif
+unlet s:local_session_directory
+

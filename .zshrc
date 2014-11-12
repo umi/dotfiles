@@ -125,6 +125,7 @@ alias ll="ls -F -l --color"
 alias psa="ps auxw"
 alias tmux='tmux -2'
 alias ssh='TERM=xterm ssh'
+alias grep='grep --color=auto'
 
 ## 最後のスラッシュを自動的に削除しない
 setopt noautoremoveslash
