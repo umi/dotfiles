@@ -14,9 +14,11 @@ NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/unite-ssh'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'gregsexton/gitv'
 NeoBundle 'szw/vim-tags'
 " Uniteコマンドでアウトラインを表示
 NeoBundle 'h1mesuke/unite-outline'
@@ -53,7 +55,7 @@ NeoBundle 'nginx.vim'
 " プロジェクト
 NeoBundle 'scrooloose/nerdtree'
 " 括弧囲みの編集操作
-NeoBundle 'surround.vim'
+NeoBundle 'tpope/vim-surround'
 " :DirDiff <A:Src Directory> <B:Src Directory> でディレクトリ比較
 NeoBundle 'DirDiff.vim'
 " :make時のエラーマーカーを表示
@@ -79,6 +81,32 @@ NeoBundle 'HybridText'
 NeoBundle 'xolox/vim-session', {
             \ 'depends' : 'xolox/vim-misc',
           \ }
+" ag 
+NeoBundle 'rking/ag.vim'
+
+" xdebgu
+NeoBundle 'joonty/vdebug'
+
+" submode
+NeoBundle 'kana/vim-submode'
+
+" textobj
+NeoBundle "kana/vim-textobj-user"
+NeoBundle "osyo-manga/vim-textobj-multiblock"
+omap ab <Plug>(textobj-multiblock-a)
+omap ib <Plug>(textobj-multiblock-i)
+vmap ab <Plug>(textobj-multiblock-a)
+vmap ib <Plug>(textobj-multiblock-i)
+
+" 履歴
+NeoBundle 'mhinz/vim-startify'
+
+" 構文チェック
+NeoBundle 'scrooloose/syntastic.git'
+
+" swapファイルリカバリ
+NeoBundle 'chrisbra/Recover.vim'
+
 
 filetype plugin on
 filetype indent on
@@ -277,6 +305,11 @@ let g:user_zen_settings = {
 \  },
 \}
 
+" .vimrc編集 :Ev
+command! Ev edit $MYVIMRC
+" .vimrc再読み込み :Rv
+command! Rv source $MYVIMRC
+
 " タブ
 set showtabline=2
 set tabstop=4
@@ -457,6 +490,8 @@ let g:lightline = {
 			\ 'active': {
 			\   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
 			\ },
+			\ 'separator': { 'left': '⮀', 'right': '⮂' },
+			\ 'subseparator': { 'left': '⮁', 'right': '⮃' },
 			\ 'component_function': {
 			\   'modified': 'MyModified',
 			\   'readonly': 'MyReadonly',
@@ -474,7 +509,7 @@ function! MyModified()
 endfunction
 
 function! MyReadonly()
-	return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+	return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
 endfunction
 
 function! MyFilename()
@@ -482,14 +517,15 @@ function! MyFilename()
 				\ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
 				\  &ft == 'unite' ? unite#get_status_string() :
 				\  &ft == 'vimshell' ? vimshell#get_status_string() :
-				\ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+				\ '' != expand('%:t') ? expand('%:p') : '[No Name]') .
 				\ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 
 function! MyFugitive()
 	try
 		if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-			return fugitive#head()
+			let _ = fugitive#head()
+			return strlen(_) ? '⭠ '._ : ''
 		endif
 	catch
 	endtry
