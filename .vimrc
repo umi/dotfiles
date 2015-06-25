@@ -1,18 +1,29 @@
 " :NeoBundleInstall インストール
 " :NeoBundleInstall! アップデート
 " :NeoBundleClean 不要プラグインの削除
-set nocompatible
-filetype off
-
+if 0 | endif
 if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
-  call neobundle#rc(expand('~/.bundle'))
+	if &compatible
+		set nocompatible
+	endif
+	set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
+
+
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Plugins
 NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimproc', {
+  \ 'build' : {
+    \ 'windows' : 'make -f make_mingw32.mak',
+    \ 'cygwin' : 'make -f make_cygwin.mak',
+    \ 'mac' : 'make -f make_mac.mak',
+    \ 'unix' : 'make -f make_unix.mak',
+  \ },
+  \ }
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru'
 NeoBundle 'Shougo/vimfiler'
@@ -28,8 +39,6 @@ NeoBundle 'walm/jshint.vim'
 NeoBundle 'scrooloose/nerdcommenter'
 " Scalaのハイライト
 NeoBundle 'derekwyatt/vim-scala'
-" zendogingプラグイン
-" NeoBundle 'mattn/zencoding-vim'
 " <Leader>rで:QuickRunという言語ごとの実行コマンド
 NeoBundle 'thinca/vim-quickrun'
 " URLエンコード、デコードするためのプラグイン
@@ -38,12 +47,8 @@ NeoBundle 'koron/chalice'
 NeoBundle 'Align'
 " 選択後 :SQLUFormatter でSQL整形
 NeoBundle 'vim-scripts/SQLUtilities'
-" PHP5.4にも対応している新しいPHPのシンタックスハイライト
-" NeoBundle 'shawncplus/php.vim'
 " smarty シンタックスハイライト
-NeoBundle 'sifue/smarty.vim'
-" :CodeSniffでPHP_CodeSnifferを実行するプラグイン
-" NeoBundle 'bpearson/vim-phpcs'
+NeoBundle 'vim-scripts/smarty-syntax'
 " JavaScriptのシンタクスハイライト
 NeoBundle 'JavaScript-syntax'
 " JavaScriptのインデント
@@ -60,13 +65,6 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'DirDiff.vim'
 " :make時のエラーマーカーを表示
 " NeoBundle 'errormarker.vim'
-" ステータスラインに顔文字を表示
-" NeoBundle 'mattn/hahhah-vim'
-" ステータスラインを見やすく
-" NeoBundle 'Lokaltog/vim-powerline'
-" NeoBundle 'alpaca-tc/alpaca_powertabline'
-" NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
-" NeoBundle 'Lokaltog/powerline-fontpatcher'
 NeoBundle 'itchyny/lightline.vim'
 " utillity
 NeoBundle 'L9'
@@ -103,13 +101,42 @@ NeoBundle 'mhinz/vim-startify'
 
 " 構文チェック
 NeoBundle 'scrooloose/syntastic.git'
+" html/css入力補助
+NeoBundle 'mattn/emmet-vim'
+" URLを開く
+NeoBundle 'open-browser.vim'
+" html5シンタックス
+NeoBundle 'hail2u/vim-css3-syntax'
+NeoBundle 'taichouchou2/html5.vim'
+" jsシンタックス
+NeoBundle 'taichouchou2/vim-javascript'
+" コーヒースクリプトシンタックス
+NeoBundle 'kchmck/vim-coffee-script'
+
+" SASS
+" NeoBundle 'AtsushiM/search-parent.vim'
+" NeoBundle 'AtsushiM/sass-compile.vim'
+NeoBundle 'cakebaker/scss-syntax.vim'
 
 " swapファイルリカバリ
 NeoBundle 'chrisbra/Recover.vim'
 
+" 保存時ctags自動生成
+NeoBundle 'soramugi/auto-ctags.vim'
+let g:auto_ctags = 1
+let g:auto_ctags_directory_list = ['.git']
+let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
 
-filetype plugin on
-filetype indent on
+" Color Scheme
+syntax enable
+set t_Co=256
+
+NeoBundle 'fugalh/desert.vim'
+colorscheme desert
+
+call neobundle#end()
+
+filetype plugin indent on
 
 " C-n補完の対象(カレントバッファ、タグ、辞書) :help 'complete'
 " neocomplcacheには影響しない？
@@ -337,12 +364,14 @@ vnoremap <silent> n "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><C
 nnoremap gf :tabe <cfile><CR>
 vnoremap gf :tabe <cfile><CR>
 " 検索語が画面中央にくるように
-nmap n nzz
-nmap N Nzz
+" nmap n nzz
+" nmap N Nzz
 " ] や ) の対応エラーをハイライト
 let php_parent_error_close = 1
 let php_parent_error_open = 1
 
+" sassシンタックスハイライト
+au BufRead,BufNewFile *.scss set filetype=sass
 
 " keymap
  
@@ -441,38 +470,6 @@ autocmd filetype php :set makeprg=php\ -l\ %
 autocmd filetype php :set errorformat=%m\ in\ %f\ on\ line\ %l
 
 
-"--------------------
-" Color Scheme
-"--------------------
-syntax enable
-set t_Co=256
-
-"--------------------
-" solarized
-"--------------------
-" NeoBundle 'altercation/vim-colors-solarized'
-" set background=dark
-" let g:solarized_termcolors=256
-" let g:solarized_termtrans=1
-" let g:solarized_degrade=0
-" let g:solarized_bold=1
-" let g:solarized_underline=1
-" let g:solarized_italic=1
-" let g:solarized_contrast="low"
-" let g:solarized_visibility="low"
-" colorschem solarized
-
-"--------------------
-" molokai
-"--------------------
-" NeoBundle 'tomasr/molokai'
-" colorscheme molokai
-
-"--------------------
-" desert
-"--------------------
-NeoBundle 'fugalh/desert.vim'
-colorscheme desert
 
 "-------------------------------------------------------------------------------
 " ステータスライン StatusLine
