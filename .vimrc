@@ -30,7 +30,7 @@ NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/unite-ssh'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
-NeoBundle 'szw/vim-tags'
+" NeoBundle 'szw/vim-tags'
 " Uniteコマンドでアウトラインを表示
 NeoBundle 'h1mesuke/unite-outline'
 " :JSHintコマンドによるJS文法チェック
@@ -60,7 +60,8 @@ NeoBundle 'nginx.vim'
 " プロジェクト
 NeoBundle 'scrooloose/nerdtree'
 " 括弧囲みの編集操作
-NeoBundle 'tpope/vim-surround'
+" NeoBundle 'tpope/vim-surround'
+NeoBundle 'anyakichi/vim-surround'
 " :DirDiff <A:Src Directory> <B:Src Directory> でディレクトリ比較
 NeoBundle 'DirDiff.vim'
 " :make時のエラーマーカーを表示
@@ -242,6 +243,7 @@ let g:neocomplcache_dictionary_filetype_lists = {
   \ 'default' : '',
   \ 'php' : $HOME . '/.vim/dict/php.dict',
   \ 'ctp' : $HOME . '/.vim/dict/php.dict',
+  \ 'as3' : $HOME . '/.vim/dict/actionscript.dict',
   \ 'twig' : $HOME . '/.vim/dict/twig.dict',
   \ 'vimshell' : $HOME . '/.vimshell/command-history',
   \ }
@@ -251,6 +253,7 @@ let g:neocomplcache_dictionary_filetype_lists = {
 augroup SetTagsFile
   autocmd!
   autocmd FileType php set tags=.git/tags
+  autocmd FileType as3 set tags=.git/tags
 augroup END
 " タグ補完の呼び出しパターン
 if !exists('g:neocomplcache_member_prefix_patterns')
@@ -286,7 +289,7 @@ let g:neocomplcache_omni_patterns['twig']= '<[^>]*'
 "let g:neocomplcache_omni_patterns['php'] = '[^. \t]->\h\w*\|\h\w*::'
  
 " Ctrl +  o でタグアウトラインを表示
-nnoremap <C-o> :<C-u>Unite outline<CR>
+" nnoremap <C-o> :<C-u>Unite outline<CR>
 
 " ,, でコメントアウトをトグル
 let NERDSpaceDelims = 1
@@ -372,6 +375,10 @@ let php_parent_error_open = 1
 
 " sassシンタックスハイライト
 au BufRead,BufNewFile *.scss set filetype=sass
+" as3シンタックスハイライト https://github.com/mherkender/as3.vim
+autocmd BufRead,BufNewFile *.as set filetype=as3
+" mxmlシンタックス http://abdulqabiz.com/files/vim/mxml.vim
+autocmd BufRead,BufNewFile *.mxml set filetype=mxml
 
 " keymap
  

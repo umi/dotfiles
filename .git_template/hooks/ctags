@@ -1,0 +1,3 @@
+#!/bin/sh
+/usr/bin/ctags --tag-relative --sort=yes --file-scope=no -R -f .git/tags `pwd`
+
