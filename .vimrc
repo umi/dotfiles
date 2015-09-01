@@ -74,6 +74,22 @@ NeoBundle 'Smooth-Scroll'
 NeoBundle 'SudoEdit.vim'
 " Qfix howm メモツール
 NeoBundle 'glidenote/memolist.vim'
+"" memolist {{{
+map ,mn  :MemoNew<CR>
+map ,mc  :MemoNew<CR>
+map ,ml  :MemoList<CR>
+map ,mg  :MemoGrep<CR>
+" let g:memolist_memo_suffix = "txt"
+let g:memolist_memo_date = "%Y-%m-%d %H:%M"
+let g:memolist_memo_date = "epoch"
+let g:memolist_memo_date = "%D %T"
+let g:memolist_prompt_tags = 1
+let g:memolist_prompt_categories = 1
+" let g:memolist_qfixgrep = 1
+let g:memolist_vimfiler = 1
+let g:memolist_template_dir_path = "~/Dropbox/memo"
+" }}}
+
 " HyblidText
 NeoBundle 'HybridText'
 " セッション
@@ -104,6 +120,22 @@ NeoBundle 'mhinz/vim-startify'
 NeoBundle 'scrooloose/syntastic.git'
 " html/css入力補助
 NeoBundle 'mattn/emmet-vim'
+let g:user_emmet_settings = {
+\ 'variables' : {
+\ 'lang' : 'ja',
+\ },
+\ 'indentation' : "\t",
+\ 'php' : {
+\ 'extends' : 'html',
+\ 'filters' : 'c',
+\ },
+\ 'xml' : {
+\ 'extends' : 'html',
+\ },
+\ 'haml' : {
+\ 'extends' : 'html',
+\ },
+\}
 " URLを開く
 NeoBundle 'open-browser.vim'
 " html5シンタックス
@@ -127,6 +159,22 @@ NeoBundle 'soramugi/auto-ctags.vim'
 let g:auto_ctags = 1
 let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
+
+" インデントに色を付けて見やすくする
+NeoBundle 'nathanaelkane/vim-indent-guides'
+" vimを立ち上げたときに、自動的にvim-indent-guidesをオンにする
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=233
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=234
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+
+" migemoサーチ
+NeoBundle 'rhysd/migemo-search.vim'
+"if executable('cmigemo')
+"	cnoremap <expr><CR> migemosearch#replace_search_word()."\<CR>"
+"endif
 
 " Color Scheme
 syntax enable
@@ -303,12 +351,6 @@ nmap <silent> <Leader>p :Project ~/.vimprojects<CR>
 " サブプロジェクトを上に、vimgrepではなくgrepを使うように設定
 let g:proj_flags = 'imstTv'
 
-" memolist.vim設定
-map ,mn  :MemoNew<CR>
-map ,mc  :MemoNew<CR>
-map ,ml  :MemoList<CR>
-map ,mg  :MemoGrep<CR>
-
 " HyblidText設定
 autocmd BufEnter * if &filetype == "" | setlocal ft=hybrid | endif
 
@@ -317,23 +359,6 @@ let g:errormarker_errortext = '!!'
 let g:errormarker_warningtext = '??'
 let g:errormarker_errorgroup = 'Error'
 let g:errormarker_errorgroup = 'Todo'
-
-" zen-codingのインデント等の設定
-let g:user_zen_settings = {
-\  'lang' : 'ja',
-\  'indentation' : '\t',
-\  'html' : {
-\    'indentation' : ' ',
-\    'filters' : 'html',
-\   },
-\  'php' : {
-\    'extends' : 'html',
-\    'filters' : 'html,c',
-\  },
-\  'css' : {
-\    'filters' : 'fc',
-\  },
-\}
 
 " .vimrc編集 :Ev
 command! Ev edit $MYVIMRC
