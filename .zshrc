@@ -130,6 +130,16 @@ alias grep='grep --color=auto'
 ## 最後のスラッシュを自動的に削除しない
 setopt noautoremoveslash
 
+# Use vim as the editor
+export EDITOR=vi
+# GNU Screen sets -o vi if EDITOR=vi, so we have to force it back.
+set -o emacs
+
+# Use C-x C-e to edit the current command line
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '\C-x\C-e' edit-command-line
+
 ## 検索
 export TEXT_BROWSER=w3m
 
@@ -181,6 +191,17 @@ function psm
     psa | sort -r -n --key=4 | grep -v "ps auxw" | grep -v grep | head -n 8
 }
 
+# cdr, add-zsh-hook を有効にする
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+ 
+# cdr の設定
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':chpwd:*' recent-dirs-max 500
+zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
+zstyle ':chpwd:*' recent-dirs-pushd true
+
 # z
 _Z_CMD=j
 source ~/git/github/z/z.sh
@@ -192,7 +213,7 @@ compctl -U -K _z_zsh_tab_completion "$_Z_CMD"
 # nodebrew
 if [[ -f ~/.nodebrew/nodebrew ]]; then
 	export PATH=$HOME/.nodebrew/current/bin:$PATH
-	nodebrew use v0.11.2
+	nodebrew use io@v2.1.0
 fi
 
 # dircolors
@@ -205,3 +226,15 @@ path=(/opt/flex/bin(N-/) $path)
 
 fpath=(~/.zsh/completion $fpath)
 
+if [ -d ~/.rbenv ]; then
+	export PATH=$HOME/.rbenv/bin:$PATH
+	eval "$(rbenv init - zsh)"
+fi
+
+export GOPATH=$HOME/bin/go
+export PATH=$PATH:$HOME/bin:$GOPATH/bin
+
+# setting for peco
+for f (~/.zsh/peco-sources/*) source "${f}" # load peco sources
+bindkey '^r' peco-select-history
+bindkey '^@' peco-cdr
