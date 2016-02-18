@@ -25,7 +25,7 @@ NeoBundle 'Shougo/vimproc', {
   \ },
   \ }
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neomru'
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/unite-ssh'
 NeoBundle 'tpope/vim-fugitive'
@@ -137,12 +137,12 @@ let g:user_emmet_settings = {
 \ },
 \}
 " URLを開く
-NeoBundle 'open-browser.vim'
+" NeoBundle 'open-browser.vim'
+NeoBundle 'tyru/open-browser.vim'
 " html5シンタックス
 NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'taichouchou2/html5.vim'
-" jsシンタックス
-NeoBundle 'taichouchou2/vim-javascript'
+NeoBundle 'othree/html5.vim'
+" NeoBundle 'taichouchou2/html5.vim'
 " コーヒースクリプトシンタックス
 NeoBundle 'kchmck/vim-coffee-script'
 
@@ -172,9 +172,9 @@ let g:indent_guides_guide_size = 1
 
 " migemoサーチ
 NeoBundle 'rhysd/migemo-search.vim'
-"if executable('cmigemo')
-"	cnoremap <expr><CR> migemosearch#replace_search_word()."\<CR>"
-"endif
+if executable('cmigemo')
+    cnoremap <expr><CR> migemosearch#replace_search_word()."\<CR>"
+endif
 
 " Color Scheme
 syntax enable
@@ -383,6 +383,8 @@ set ttymouse=xterm2
 autocmd FileType * setlocal formatoptions-=ro
 " サーチハイライトををESC二回で消す
 nnoremap <Esc><Esc> :nohlsearch<CR><Esc>
+" パターン検索モード
+nnoremap / /\v
 " 挿入モードとノーマルモードでステータスラインの色を変更する
 au InsertEnter * hi StatusLine guifg=DarkBlue guibg=DarkYellow gui=none ctermfg=Blue ctermbg=Yellow cterm=none
 au InsertLeave * hi StatusLine guifg=Black guibg=White gui=none ctermfg=Black ctermbg=White cterm=none

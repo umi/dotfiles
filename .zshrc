@@ -191,8 +191,13 @@ function psm
     psa | sort -r -n --key=4 | grep -v "ps auxw" | grep -v grep | head -n 8
 }
 
-# cdr, add-zsh-hook を有効にする
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+function sv5sync
+{
+	sh ~/tool/rsync.sh $1 $2
+}
+
+# cdr, add-zsh-hook, zmv を有効にする
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook zmv
 add-zsh-hook chpwd chpwd_recent_dirs
  
 # cdr の設定
@@ -213,7 +218,7 @@ compctl -U -K _z_zsh_tab_completion "$_Z_CMD"
 # nodebrew
 if [[ -f ~/.nodebrew/nodebrew ]]; then
 	export PATH=$HOME/.nodebrew/current/bin:$PATH
-	nodebrew use io@v2.1.0
+	nodebrew use v5.1.0
 fi
 
 # dircolors
@@ -238,3 +243,5 @@ export PATH=$PATH:$HOME/bin:$GOPATH/bin
 for f (~/.zsh/peco-sources/*) source "${f}" # load peco sources
 bindkey '^r' peco-select-history
 bindkey '^@' peco-cdr
+
+path=(~/.composer/vendor/bin(N-/) $path)
