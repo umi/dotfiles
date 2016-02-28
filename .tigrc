@@ -1,4 +1,8 @@
-bind generic G none
-bind generic U !git pull --rebase
-bind generic P !git push
+bind generic g move-first-line
+bind generic G move-last-line
 bind generic O !git commit -m 'test'
+
+bind branch n !?git checkout -b %(prompt) %(branch)
+bind branch D !?git branch -D %(branch)
+bind branch d !?git branch -d %(branch)
+bind branch P !?git push -u origin %(branch):%(branch)
