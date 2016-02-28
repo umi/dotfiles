@@ -1,0 +1,76 @@
+[[plugins]]
+repo = 'Shougo/neocomplcache'
+on_i = 1
+
+
+# JavaScriptのシンタクスハイライト
+[[plugins]]
+repo = 'JavaScript-syntax'
+on_ft = ['javascript']
+
+# JavaScriptのインデント
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+on_ft = ['javascript']
+
+# jsシンタックス
+#[[plugins]]
+#repo = 'taichouchou2/vim-javascript'
+on_ft = ['javascript']
+
+# コーヒースクリプトシンタックス
+[[plugins]]
+repo = 'kchmck/vim-coffee-script'
+on_ft = ['javascript']
+
+# jQuery
+[[plugins]]
+repo = 'jQuery'
+on_ft = ['javascript']
+
+
+# html5シンタックス
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+on_ft = ['css']
+
+[[plugins]]
+repo = 'taichouchou2/html5.vim'
+on_ft = ['html']
+
+
+
+# 選択後 :SQLUFormatter でSQL整形
+[[plugins]]
+repo = 'vim-scripts/SQLUtilities'
+on_cmd = ['SQLUFormatter']
+
+# :JSHintコマンドによるJS文法チェック
+[[plugins]]
+repo = 'walm/jshint.vim'
+on_cmd = ['JSHint']
+
+# <Leader>rで:QuickRunという言語ごとの実行コマンド
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+on_cmd = ['QuickRun']
+
+# :Gitvコマンドでgit操作
+[[plugins]]
+repo = 'gregsexton/gitv'
+on_cmd = ['Gitv','Gitv!']
+
+# :Unite outlineコマンドでアウトラインを表示
+[[plugins]]
+repo = 'h1mesuke/unite-outline'
+on_cmd = ['Unite outline']
+
+# :Unite sshコマンドssh
+[[plugins]]
+repo = 'Shougo/unite-ssh'
+on_cmd = ['Unite ssh']
+
+# :Ag コマンドでag
+[[plugins]]
+repo = 'rking/ag.vim'
+on_cmd = ['Ag']

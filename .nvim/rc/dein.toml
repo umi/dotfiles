@@ -1,0 +1,136 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+
+	[plugins.build]
+	windows = 'tools\\update-dll-mingw'
+	cygwin	= 'make -f make_cygwin.mak'
+	mac		= 'make -f make_mac.mak'
+	linux	= 'make'
+	unix	= 'gmake'
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+
+# 括弧囲みの編集操作
+[[plugins]]
+repo = 'anyakichi/vim-surround'
+
+#[[plugins]]
+#repo = 'Shougo/neomru'
+
+# :DirDiff <A:Src Directory> <B:Src Directory> でディレクトリ比較
+[[plugins]]
+repo = 'DirDiff.vim'
+
+# utillity
+[[plugins]]
+repo = 'L9'
+
+[[plugins]]
+repo = 'SudoEdit.vim'
+
+# Qfix howm メモツール
+[[plugins]]
+repo = 'glidenote/memolist.vim'
+
+# HyblidText
+[[plugins]]
+repo = 'HybridText'
+
+# セッション
+[[plugins]]
+repo = 'xolox/vim-session'
+depends = ['vim-misc']
+[[plugins]]
+repo = 'xolox/vim-misc'
+
+# swapファイルリカバリ
+[[plugins]]
+repo = 'chrisbra/Recover.vim'
+
+# 保存時ctags自動生成
+[[plugins]]
+repo = 'soramugi/auto-ctags.vim'
+
+# 履歴
+[[plugins]]
+repo = 'mhinz/vim-startify'
+
+[[plugins]]
+repo = 'Shougo/vimfiler'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+# ,,でトグルでコメントアウト
+[[plugins]]
+repo = 'scrooloose/nerdcommenter'
+
+# URLエンコード、デコードするためのプラグイン
+[[plugins]]
+repo = 'koron/chalice'
+
+
+# プロジェクト
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+
+# xdebgu
+[[plugins]]
+repo = 'joonty/vdebug'
+
+# submode
+[[plugins]]
+repo = 'kana/vim-submode'
+
+# textobj
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+# textobj
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-multiblock'
+
+# 構文チェック
+[[plugins]]
+repo = 'scrooloose/syntastic.git'
+
+# html/css入力補助
+[[plugins]]
+repo = 'mattn/emmet-vim'
+
+# URLを開く
+[[plugins]]
+repo = 'open-browser.vim'
+
+# :make時のエラーマーカーを表示
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+# smooth_scroll.vim : スクロールを賢く
+[[plugins]]
+repo = 'Smooth-Scroll'
+
+
+# colorscheme desert
+[[plugins]]
+repo = 'fugalh/desert.vim'
+
+# nginx conf
+[[plugins]]
+repo = 'nginx.vim'
+
+# SQL の整形のために必要なプラグイン
+[[plugins]]
+repo = 'Align'
+
+# smarty シンタックスハイライト
+[[plugins]]
+repo = 'vim-scripts/smarty-syntax'
+
+# Scalaのハイライト
+[[plugins]]
+repo = 'derekwyatt/vim-scala'
