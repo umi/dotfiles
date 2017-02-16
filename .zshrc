@@ -126,6 +126,7 @@ alias psa="ps auxw"
 alias tmux='tmux -2'
 alias ssh='TERM=xterm ssh'
 alias grep='grep --color=auto'
+alias tig='tig -1000'
 
 ## 最後のスラッシュを自動的に削除しない
 setopt noautoremoveslash
@@ -218,7 +219,7 @@ compctl -U -K _z_zsh_tab_completion "$_Z_CMD"
 # nodebrew
 if [[ -f ~/.nodebrew/nodebrew ]]; then
 	export PATH=$HOME/.nodebrew/current/bin:$PATH
-	nodebrew use v5.1.0
+	nodebrew use v7.3.0
 fi
 
 # dircolors

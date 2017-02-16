@@ -1,6 +1,97 @@
 [[plugins]]
-repo = 'Shougo/neocomplcache'
+repo = 'Shougo/deoplete.nvim'
+on_event = 'InsertCharPre'
+hook_source = '''
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#auto_complete_delay = 0
+  let g:deoplete#auto_complete_start_length = 1
+  let g:deoplete#auto_completion_start_length = 1
+  let g:deoplete#enable_camel_case = 0
+  let g:deoplete#enable_ignore_case = 0
+  let g:deoplete#enable_camel_case_completion = 1
+  let g:deoplete#enable_underbar_completion = 1
+  let g:deoplete#enable_refresh_always = 0
+  let g:deoplete#enable_smart_case = 1
+  let g:deoplete#file#enable_buffer_path = 1
+  let g:deoplete#max_list = 10000
+
+  let g:deoplete#delimiters = ['/', '.', '::', ':', '#', '->']
+  
+  let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
+  let g:deoplete#ignore_sources.php = ['omni']
+
+  let g:deoplete#sources = {}
+  let g:deoplete#sources._=['omni', 'buffer', 'member', 'tag', 'ultisnips', 'file']
+  if !exists('g:deoplete#source#omni#input_patterns')
+	  let g:deoplete#source#omni#input_patterns = {}
+  endif
+  let g:deoplete#source#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+  let g:deoplete#source#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+  let g:deoplete#source#omni#input_patterns.python = ''
+  
+  let g:deoplete#omni#input_patterns = {}
+  let g:deoplete#omni#input_patterns.php = '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+  " let g:deoplete#omni#input_patterns.html = '<[^>]*'
+  let g:deoplete#omni#input_patterns.xml  = '<[^>]*'
+  let g:deoplete#omni#input_patterns.md   = '<[^>]*'
+  let g:deoplete#omni#input_patterns.css   = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+  let g:deoplete#omni#input_patterns.scss   = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+  let g:deoplete#omni#input_patterns.sass   = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+  let g:deoplete#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\w*'
+  let g:deoplete#omni#input_patterns.cpp = ['[^. *\t]\.\w*', '[^. *\t]\::\w*', '[^. *\t]\->\w*', '[<"].*/']
+  " let g:deoplete#omni#input_patterns.javascript = '[^. \t]\.\%(\h\w*\)\?'
+
+  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+		\ neosnippet#expandable_or_jumpable() ?
+		\    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+
+  "  " TABで補完できるようにする
+  "  imap <silent><expr> <TAB>
+  "    \ pumvisible() ? "\<C-n>" :
+  "    \ <SID>check_back_space() ? "\<TAB>" :
+  "    \ deoplete#mappings#manual_complete()
+  "  
+  "  function! s:check_back_space() abort "{{{
+  "  let col = col('.') - 1
+  "  return !col || getline('.')[col - 1]  =~ '\s'
+  "  endfunction
+
+  " Shift-TAB で戻る
+  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+  " C-yで補完候補の確定
+  inoremap <expr><C-y> deoplete#mappings#close_popup()
+  " C-gで補完を元に戻す
+  inoremap <expr><C-g> deoplete#mappings#undo_completion()
+  " 補完候補の共通部分までを補完する
+  inoremap <expr><C-l> deoplete#complete_common_string()
+  " C-nでdeoplete補完
+  inoremap <expr><C-n> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
+  " C-pでkeyword補完
+  inoremap <expr><C-p> pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
+  " 改行で補完ウィンドウを閉じる
+  inoremap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "<CR>"
+'''
 on_i = 1
+
+
+# [[plugins]]
+# repo = 'padawan-php/deoplete-padawan'
+# on_ft = ['php']
+
+
+[[plugins]]
+repo = 'Shougo/neosnippet'
+hook_source = '''
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
+'''
+on_i  = 1
+on_ft = ['snippet']
+depends = ['neosnippet-snippets']
 
 
 # JavaScriptのシンタクスハイライト
@@ -34,9 +125,9 @@ on_ft = ['javascript']
 repo = 'hail2u/vim-css3-syntax'
 on_ft = ['css']
 
-[[plugins]]
-repo = 'taichouchou2/html5.vim'
-on_ft = ['html']
+# [[plugins]]
+# repo = 'taichouchou2/html5.vim'
+# on_ft = ['html']
 
 
 

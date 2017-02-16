@@ -1,6 +1,17 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
+[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+[[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]] # toml syntax
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 
@@ -13,6 +24,9 @@ repo = 'Shougo/vimproc.vim'
 
 [[plugins]]
 repo = 'Shougo/unite.vim'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
 
 # 括弧囲みの編集操作
 [[plugins]]
@@ -134,3 +148,7 @@ repo = 'vim-scripts/smarty-syntax'
 # Scalaのハイライト
 [[plugins]]
 repo = 'derekwyatt/vim-scala'
+
+# neosnippet
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
