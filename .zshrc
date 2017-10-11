@@ -219,7 +219,7 @@ compctl -U -K _z_zsh_tab_completion "$_Z_CMD"
 # nodebrew
 if [[ -f ~/.nodebrew/nodebrew ]]; then
 	export PATH=$HOME/.nodebrew/current/bin:$PATH
-	nodebrew use v7.3.0
+	nodebrew use v8.4.0
 fi
 
 # dircolors
@@ -246,3 +246,10 @@ bindkey '^r' peco-select-history
 bindkey '^@' peco-cdr
 
 path=(~/.composer/vendor/bin(N-/) $path)
+
+#=============================
+# source zsh-syntax-highlighting
+#=============================
+if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
