@@ -37,14 +37,14 @@ repo = 'anyakichi/vim-surround'
 
 # :DirDiff <A:Src Directory> <B:Src Directory> でディレクトリ比較
 [[plugins]]
-repo = 'DirDiff.vim'
+repo = 'vim-scripts/DirDiff.vim'
 
 # utillity
 [[plugins]]
-repo = 'L9'
+repo = 'vim-scripts/L9'
 
 [[plugins]]
-repo = 'SudoEdit.vim'
+repo = 'vim-scripts/SudoEdit.vim'
 
 # Qfix howm メモツール
 [[plugins]]
@@ -52,7 +52,7 @@ repo = 'glidenote/memolist.vim'
 
 # HyblidText
 [[plugins]]
-repo = 'HybridText'
+repo = 'vim-scripts/HybridText'
 
 # セッション
 [[plugins]]
@@ -118,7 +118,7 @@ repo = 'mattn/emmet-vim'
 
 # URLを開く
 [[plugins]]
-repo = 'open-browser.vim'
+repo = 'vim-scripts/open-browser.vim'
 
 # :make時のエラーマーカーを表示
 [[plugins]]
@@ -126,7 +126,7 @@ repo = 'itchyny/lightline.vim'
 
 # smooth_scroll.vim : スクロールを賢く
 [[plugins]]
-repo = 'Smooth-Scroll'
+repo = 'vim-scripts/Smooth-Scroll'
 
 
 # colorscheme desert
@@ -135,11 +135,11 @@ repo = 'fugalh/desert.vim'
 
 # nginx conf
 [[plugins]]
-repo = 'nginx.vim'
+repo = 'vim-scripts/nginx.vim'
 
 # SQL の整形のために必要なプラグイン
 [[plugins]]
-repo = 'Align'
+repo = 'vim-scripts/Align'
 
 # smarty シンタックスハイライト
 [[plugins]]
@@ -150,5 +150,5 @@ repo = 'vim-scripts/smarty-syntax'
 repo = 'derekwyatt/vim-scala'
 
 # neosnippet
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
+# [[plugins]]
+# repo = 'Shougo/neosnippet-snippets'

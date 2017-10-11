@@ -78,9 +78,12 @@ on_i = 1
 # repo = 'padawan-php/deoplete-padawan'
 # on_ft = ['php']
 
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'Shougo/neosnippet'
+depends = ['neosnippet-snippets']
 hook_source = '''
   imap <C-k> <Plug>(neosnippet_expand_or_jump)
   smap <C-k> <Plug>(neosnippet_expand_or_jump)
@@ -91,12 +94,11 @@ hook_source = '''
 '''
 on_i  = 1
 on_ft = ['snippet']
-depends = ['neosnippet-snippets']
 
 
 # JavaScriptのシンタクスハイライト
 [[plugins]]
-repo = 'JavaScript-syntax'
+repo = 'vim-scripts/JavaScript-syntax'
 on_ft = ['javascript']
 
 # JavaScriptのインデント
@@ -116,7 +118,7 @@ on_ft = ['javascript']
 
 # jQuery
 [[plugins]]
-repo = 'jQuery'
+repo = 'vim-scripts/jQuery'
 on_ft = ['javascript']
 
 
