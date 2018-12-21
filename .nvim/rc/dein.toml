@@ -1,17 +1,6 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
-repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype.vim']
-
-[[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ
-repo = 'Shougo/context_filetype.vim'
-
-[[plugins]] # toml syntax
-repo = 'cespare/vim-toml'
-on_ft = 'toml'
-
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 
@@ -25,8 +14,23 @@ repo = 'Shougo/vimproc.vim'
 [[plugins]]
 repo = 'Shougo/unite.vim'
 
+
+# カーソル位置のコンテキストに合わせてftを切り替える
 [[plugins]]
-repo = 'Shougo/denite.nvim'
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+# カーソル位置のコンテキストのftを判定するライブラリ
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+hook_add = '''
+	let g:context_filetype#search_offset = 300
+'''
+
+# toml syntax
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
 
 # 括弧囲みの編集操作
 [[plugins]]
@@ -68,6 +72,12 @@ repo = 'chrisbra/Recover.vim'
 # 保存時ctags自動生成
 [[plugins]]
 repo = 'soramugi/auto-ctags.vim'
+hook_add = '''
+	" ctags自動生成
+	let g:auto_ctags = 1
+	let g:auto_ctags_directory_list = ['.git']
+	let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes --langmap=PHP:+.inc --languages=php --php-kinds=cfd'
+'''
 
 # 履歴
 [[plugins]]
@@ -148,7 +158,3 @@ repo = 'vim-scripts/smarty-syntax'
 # Scalaのハイライト
 [[plugins]]
 repo = 'derekwyatt/vim-scala'
-
-# neosnippet
-# [[plugins]]
-# repo = 'Shougo/neosnippet-snippets'

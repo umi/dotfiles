@@ -38,9 +38,9 @@ vmap ab <Plug>(textobj-multiblock-a)
 vmap ib <Plug>(textobj-multiblock-i)
 
 " ctags自動生成
-let g:auto_ctags = 1
-let g:auto_ctags_directory_list = ['.git']
-let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
+" let g:auto_ctags = 1
+" let g:auto_ctags_directory_list = ['.git']
+" let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
 
 " Color Scheme
 syntax enable
