@@ -2,6 +2,40 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 'Shougo/deoplete.nvim'
+hook_add = '''
+	let g:deoplete#enable_at_startup = 1
+	let g:deoplete#enable_ignore_case = 1
+	let g:deoplete#enable_smart_case = 1
+
+	let g:deoplete#ctags_arguments_list = {
+	\ 'php' : '-R --languages=PHP --langmap=PHP:.php.inc --php-types=c+f+d'
+	\}
+
+	" Key-mappings and Events " {{{
+	" ---
+
+	" Movement within 'ins-completion-menu'
+	imap <expr><C-j>   pumvisible() ? "\<Down>" : "\<C-j>"
+	imap <expr><C-k>   pumvisible() ? "\<Up>" : "\<C-k>"
+
+	inoremap <silent><expr><CR> pumvisible() ? deoplete#close_popup() : "\<CR>"
+
+	" <Tab> completion:
+	imap <silent><expr><Tab> pumvisible() ? "\<Down>" : (<SID>is_whitespace() ? "\<Tab>" : deoplete#manual_complete())
+
+	smap <silent><expr><Tab> pumvisible() ? "\<Down>" : (<SID>is_whitespace() ? "\<Tab>" : deoplete#manual_complete())
+
+	inoremap <expr><S-Tab>  pumvisible() ? "\<Up>" : "\<C-h>"
+
+	function! s:is_whitespace() "{{{
+		let col = col('.') - 1
+		return ! col || getline('.')[col - 1] =~? '\s'
+	endfunction "}}}
+	" }}}
+'''
+
+[[plugins]]
 repo = 'Shougo/vimproc.vim'
 
 	[plugins.build]
@@ -10,10 +44,6 @@ repo = 'Shougo/vimproc.vim'
 	mac		= 'make -f make_mac.mak'
 	linux	= 'make'
 	unix	= 'gmake'
-
-[[plugins]]
-repo = 'Shougo/unite.vim'
-
 
 # カーソル位置のコンテキストに合わせてftを切り替える
 [[plugins]]
@@ -74,7 +104,7 @@ repo = 'chrisbra/Recover.vim'
 repo = 'soramugi/auto-ctags.vim'
 hook_add = '''
 	" ctags自動生成
-	let g:auto_ctags = 1
+	let g:auto_ctags = 0
 	let g:auto_ctags_directory_list = ['.git']
 	let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes --langmap=PHP:+.inc --languages=php --php-kinds=cfd'
 '''
@@ -158,3 +188,46 @@ repo = 'vim-scripts/smarty-syntax'
 # Scalaのハイライト
 [[plugins]]
 repo = 'derekwyatt/vim-scala'
+
+# fzf
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --bin'
+merged = '0'
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+depends = 'fzf'
+hook_add = '''
+	nnoremap <silent> <C-]> :call fzf#vim#tags(expand('<cword>'))<CR>
+	let g:fzf_action = {
+		\ 'ctrl-c': 'tab split',
+		\ 'ctrl-n': 'tab split',
+		\ 'ctrl-x': 'split',
+		\ 'ctrl-v': 'vsplit' }
+	let g:fzf_buffers_jump = 1
+	let g:fzf_layout = { 'window': 'enew' }
+	command! -bang -nargs=* Rg
+		\ call fzf#vim#grep(
+		\   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+		\   <bang>0 ? fzf#vim#with_preview('up:60%')
+		\           : fzf#vim#with_preview('right:50%:hidden', '?'),
+		\   <bang>0)
+'''
+
+# マルチカーソル
+[[plugins]]
+repo = 'terryma/vim-multiple-cursors'
+hook_add = '''
+	let g:multi_cursor_use_default_mapping=0
+
+	" Default mapping
+	let g:multi_cursor_start_word_key      = '<C-n>'
+	let g:multi_cursor_select_all_word_key = '<A-n>'
+	let g:multi_cursor_start_key           = 'g<C-n>'
+	let g:multi_cursor_select_all_key      = 'g<A-n>'
+	let g:multi_cursor_next_key            = '<C-n>'
+	let g:multi_cursor_prev_key            = '<C-p>'
+	let g:multi_cursor_skip_key            = '<C-x>'
+	let g:multi_cursor_quit_key            = '<Esc>'
+'''

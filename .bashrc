@@ -121,3 +121,5 @@ fi
 _Z_CMD=j
 source ~/git/github/z/z.sh
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

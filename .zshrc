@@ -126,7 +126,7 @@ alias psa="ps auxw"
 alias tmux='tmux -2'
 alias ssh='TERM=xterm ssh'
 alias grep='grep --color=auto'
-alias tig='tig -1000'
+alias tig='tig -n 1000'
 
 ## 最後のスラッシュを自動的に削除しない
 setopt noautoremoveslash
@@ -219,7 +219,7 @@ compctl -U -K _z_zsh_tab_completion "$_Z_CMD"
 # nodebrew
 if [[ -f ~/.nodebrew/nodebrew ]]; then
 	export PATH=$HOME/.nodebrew/current/bin:$PATH
-	nodebrew use v8.4.0
+	nodebrew use v9.11.1
 fi
 
 # dircolors
@@ -253,3 +253,13 @@ path=(~/.composer/vendor/bin(N-/) $path)
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+#=============================
+# google cloud sdk
+#=============================
+if [[ -f ~/src/google-cloud-sdk ]]; then
+	source /home/umi/src/google-cloud-sdk/completion.zsh.inc
+	source /home/umi/src/google-cloud-sdk/path.zsh.inc
+fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
