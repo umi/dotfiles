@@ -263,3 +263,8 @@ if [[ -f ~/src/google-cloud-sdk ]]; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# pyenv
+export PATH="$PYENV_PATH/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
