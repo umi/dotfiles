@@ -232,13 +232,26 @@ path=(/opt/flex/bin(N-/) $path)
 
 fpath=(~/.zsh/completion $fpath)
 
+# rbenv
 if [ -d ~/.rbenv ]; then
 	export PATH=$HOME/.rbenv/bin:$PATH
 	eval "$(rbenv init - zsh)"
 fi
 
-export GOPATH=$HOME/bin/go
-export PATH=$PATH:$HOME/bin:$GOPATH/bin
+# pyenv
+if [ -d ~/.pyenv ]; then
+	export PYENV_ROOT="$HOME/.pyenv"
+	export PATH="$PYENV_ROOT/bin:$PATH"
+	eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
+fi
+
+# goenv
+if [ -d ~/.goenv ]; then
+	export GOENV_ROOT=$HOME/.goenv
+	export PATH=$GOENV_ROOT/bin:$PATH
+	eval "$(goenv init -)"
+fi
 
 # setting for peco
 for f (~/.zsh/peco-sources/*) source "${f}" # load peco sources
@@ -263,11 +276,3 @@ if [[ -f ~/src/google-cloud-sdk ]]; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-	eval "$(pyenv init -)"
-	eval "$(pyenv virtualenv-init -)"
-fi
