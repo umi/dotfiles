@@ -157,3 +157,17 @@ hook_add = '''
 	let g:EasyMotion_smartcase = 1
 	hi EasyMotionTarget guifg=#80a0ff ctermfg=81
 '''
+
+# java 補完 ジャンプ コードフォーマット
+# [[plugins]]
+# repo = 'neoclide/coc.nvim'
+# rev = 'release'
+# on_i = 1
+# merged = '0'
+# hook_source = 'call config#init#coc#hook_source()'
+
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+if = '''executable('node') && executable('yarn')'''
+build = './install.sh nightly'
+merged = '0'

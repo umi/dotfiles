@@ -123,3 +123,9 @@ source ~/git/github/z/z.sh
 
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export PATH=/mnt/c/Users/umi/AppData/Local/Programs/Microsoft\ VS\ Code/bin:$PATH
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

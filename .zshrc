@@ -1,10 +1,13 @@
+# zmodload zsh/zprof
+
 export LANG=ja_JP.UTF-8
 HISTFILE=$HOME/.zsh-history
 HISTSIZE=100000
 SAVEHIST=100000
 
 ## 補完機能の強化
-autoload -U compinit
+fpath=(${ASDF_DIR}/completions $fpath)
+autoload -Uz compinit
 compinit
 
 ## プロンプトの設定
@@ -127,12 +130,15 @@ alias tmux='tmux -2'
 alias ssh='TERM=xterm ssh'
 alias grep='grep --color=auto'
 alias tig='tig -n 1000'
+alias vi='nvim'
+alias vim='nvim'
+alias vimdiff='nvim -d'
 
 ## 最後のスラッシュを自動的に削除しない
 setopt noautoremoveslash
 
 # Use vim as the editor
-export EDITOR=vi
+export EDITOR=nvim
 # GNU Screen sets -o vi if EDITOR=vi, so we have to force it back.
 set -o emacs
 
@@ -216,42 +222,17 @@ source ~/git/github/z/z.sh
 # }
 compctl -U -K _z_zsh_tab_completion "$_Z_CMD"
 
-# nodebrew
-if [[ -f ~/.nodebrew/nodebrew ]]; then
-	export PATH=$HOME/.nodebrew/current/bin:$PATH
-	nodebrew use v13.5.0
-fi
-
 # dircolors
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 
-#flex sdk
-path=(/opt/flex/bin(N-/) $path)
-
 fpath=(~/.zsh/completion $fpath)
 
-# rbenv
-if [ -d ~/.rbenv ]; then
-	export PATH=$HOME/.rbenv/bin:$PATH
-	eval "$(rbenv init - zsh)"
-fi
-
-# pyenv
-if [ -d ~/.pyenv ]; then
-	export PYENV_ROOT="$HOME/.pyenv"
-	export PATH="$PYENV_ROOT/bin:$PATH"
-	eval "$(pyenv init -)"
-	eval "$(pyenv virtualenv-init -)"
-fi
-
-# goenv
-if [ -d ~/.goenv ]; then
-	export GOENV_ROOT=$HOME/.goenv
-	export PATH=$GOENV_ROOT/bin:$PATH
-	eval "$(goenv init -)"
-fi
+# asdf
+# if [ -d ~/.asdf ]; then
+	. $HOME/.asdf/asdf.sh
+# fi
 
 # setting for peco
 for f (~/.zsh/peco-sources/*) source "${f}" # load peco sources
@@ -276,3 +257,13 @@ if [[ -f ~/src/google-cloud-sdk ]]; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# zprof
+
+
+path=(/mnt/c/Users/umi/AppData/Local/Programs/Microsoft VS Code/bin(N-/) $path)
+
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

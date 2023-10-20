@@ -6,11 +6,12 @@ repo = 'Shougo/deoplete.nvim'
 hook_add = '''
 	let g:deoplete#enable_at_startup = 1
 	let g:deoplete#enable_ignore_case = 1
-	let g:deoplete#enable_smart_case = 1
 
 	let g:deoplete#ctags_arguments_list = {
 	\ 'php' : '-R --languages=PHP --langmap=PHP:.php.inc --php-types=c+f+d'
 	\}
+
+	call deoplete#custom#option('smart_case', v:true)
 
 	" Key-mappings and Events " {{{
 	" ---
@@ -160,10 +161,6 @@ repo = 'scrooloose/syntastic.git'
 # html/css入力補助
 [[plugins]]
 repo = 'mattn/emmet-vim'
-
-# URLを開く
-[[plugins]]
-repo = 'vim-scripts/open-browser.vim'
 
 # :make時のエラーマーカーを表示
 [[plugins]]
